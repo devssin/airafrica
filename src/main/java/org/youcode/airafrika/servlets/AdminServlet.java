@@ -6,6 +6,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.youcode.airafrika.services.AdminService;
+import org.youcode.airafrika.services.ServiceImp.AdminImp;
 
 import java.io.IOException;
 
@@ -20,6 +23,29 @@ public class AdminServlet extends HttpServlet {
           System.out.println(e.getMessage());
       }
     }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        AdminService adminService = new AdminImp();
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String error = "";
+        if(username.isEmpty() || password.isEmpty()){
+            error = "You must fill all fields";
+        }else if (!adminService.authenticate(username, password)){
+            error = "Invalid username or password ";
+
+        }
+
+        if(!error.isEmpty()){
+            request.setAttribute("message" , error);
+            request.getRequestDispatcher("WEB-INF/AdminLogin.jsp").forward(request, response);
+        }else {
+            HttpSession seasson = request.getSession();
+            seasson.setAttribute("username" , username);
+            response.sendRedirect("vols");
+        }
+    }
+
 
     public void destroy(){}
 

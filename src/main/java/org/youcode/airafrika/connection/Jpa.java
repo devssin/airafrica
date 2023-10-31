@@ -11,7 +11,7 @@ public class Jpa {
     private static Jpa instance = null;
     private final EntityManagerFactory entityManagerFactory;
     @Getter
-    private final EntityManager entityManager;
+    private static  EntityManager entityManager = null;
 
     private Jpa() {
         entityManagerFactory = Persistence.createEntityManagerFactory("default");
@@ -24,7 +24,7 @@ public class Jpa {
         }
         return instance;
     }
-    public void beginTransaction() {
+    public static void beginTransaction() {
         entityManager.getTransaction().begin();
     }
 
@@ -39,11 +39,11 @@ public class Jpa {
     }
 
 
-    public void commit(){
+    public static void commit(){
         entityManager.getTransaction().commit();
     }
 
-    public void rollback(){
+    public static void rollback(){
         entityManager.getTransaction().rollback();
     }
 

@@ -16,7 +16,6 @@ public class VolReservation {
     private Status status;
     private ClassType class_type;
     private int sit_number;
-    private Double price;
 
     @ManyToOne()
     @JoinColumn(name = "passager_id")

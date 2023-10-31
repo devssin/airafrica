@@ -1,12 +1,16 @@
 package org.youcode.airafrika.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "vol")
+@Getter
+@Setter
 public class Vol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +19,8 @@ public class Vol {
     private Date arrives_at;
     private String start_city;
     private String arrive_city;
+    private double price;
+
     @ManyToOne()
     @JoinColumn(name = "plan_id")
     Plan plan;
